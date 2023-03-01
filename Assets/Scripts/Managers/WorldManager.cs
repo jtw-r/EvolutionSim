@@ -1,25 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
-    private PositionManager PositionManager;
+    public PositionManager PositionManager;
     public PopulationManager PopulationManager;
-    
-    
+    public GameObject template;
+    public int DesiredPopulation = 50;
+    private GameObject creaturesContainerObject;
+    private GameObject worldObject;
+
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        this.PositionManager = new PositionManager();
-        this.PopulationManager = new PopulationManager(this.PositionManager);
-        this.PopulationManager.CreateInitialPopulation(20);
+        worldObject = new GameObject("World Object");
+        worldObject.transform.parent = gameObject.transform;
+        creaturesContainerObject = new GameObject("Creatures");
+        creaturesContainerObject.transform.parent = worldObject.transform;
+        PositionManager = new PositionManager(creaturesContainerObject, template);
+        PopulationManager = new PopulationManager(PositionManager);
+        PopulationManager.CreateInitialPopulation(DesiredPopulation);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
 }

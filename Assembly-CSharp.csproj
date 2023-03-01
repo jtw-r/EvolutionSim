@@ -44,13 +44,17 @@
      <Compile Include="Assets/Scripts/Brain.cs" />
      <Compile Include="Assets/Scripts/Managers/PopulationManager.cs" />
      <Compile Include="Assets/Scripts/NeuronGroup.cs" />
+     <Compile Include="Assets/Scripts/Managers/InputManager.cs" />
      <Compile Include="Assets/Scripts/Managers/WorldManager.cs" />
      <Compile Include="Assets/Scripts/Creature.cs" />
      <Compile Include="Assets/Scripts/Managers/PositionManager.cs" />
      <Compile Include="Assets/Scripts/DNA.cs" />
+     <Compile Include="Assets/Scripts/Managers/SimulationManager.cs" />
      <Compile Include="Assets/Scripts/Genome.cs" />
      <Compile Include="Assets/Scripts/PositionalObject.cs" />
+     <Compile Include="Assets/Scripts/Try.cs" />
      <Compile Include="Assets/Scripts/Neuron.cs" />
+     <Compile Include="Assets/Scripts/Managers/GameManager.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.2f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
