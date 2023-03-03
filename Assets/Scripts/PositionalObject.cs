@@ -5,39 +5,51 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class PositionalObject : MonoBehaviour
 {
-    public GameObject myGameobject;
-
-    public Vector3 position = new(0, 0, 0);
+    public PositionManager Manager;
+    public Vector3 pos;
+    public int TimesMoved;
 
     public void Start()
     {
     }
 
-    private void Update()
+    public void Update()
     {
-        myGameobject.transform.position = position;
     }
 
-    public void Create(GameObject _gameObject)
+    public void Create(float x, float y, PositionManager manager)
     {
-        myGameobject = _gameObject;
+        Manager = manager;
         var r = (float) Math.Round(Random.value, 1);
         var g = (float) Math.Round(Random.value, 1);
         var b = (float) Math.Round(Random.value, 1);
 
-        myGameobject.GetComponent<SpriteRenderer>().color =
+        gameObject.GetComponent<SpriteRenderer>().color =
             new Color(r, g, b);
 
-        position = myGameobject.transform.position;
+        transform.position.Set(x, y, 0f);
+        pos = new Vector3(x, y, 0);
     }
 
     public void Translate(Vector3 pos)
     {
-        position += pos;
+        Manager.MovePiece(this, transform.position + pos);
     }
 
     public void MoveTo(Vector3 pos)
     {
-        position = pos;
+        Manager.MovePiece(this, pos);
+    }
+
+    public void SetPosition(Vector3 pos)
+    {
+        TimesMoved++;
+        transform.position = pos;
+    }
+
+    public void Destroy()
+    {
+        Manager.Positionals.Remove(this);
+        Destroy(gameObject);
     }
 }

@@ -1,45 +1,73 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public class PositionManager
+public class PositionManager : MonoBehaviour
 {
+    public GameObject camera;
+    public GameObject parent;
     public List<PositionalObject> Positionals = new();
-    public int size = 10;
-    private GameObject parent;
-    private Dictionary<Vector2, PositionalObject> positions;
-    private GameObject template;
+    private Dictionary<Vector2, PositionalObject> positions = new();
+    public int size;
+    public GameObject template;
 
-    public PositionManager(GameObject parent, GameObject template)
+    public void Start()
     {
-        this.parent = parent;
-        this.template = template;
-        positions = new Dictionary<Vector2, PositionalObject>();
+        camera.transform.position = new Vector3(size / 2f, size / 2f, -10);
+        camera.GetComponent<Camera>().orthographicSize = size / 2f + 2f;
     }
 
-    private Vector2 genetateRandomEmptyPosition()
+
+    public void Reset()
     {
-        var position = new Vector2(Random.Range(0, size - 1), Random.Range(0, size - 1));
-        if (positions.ContainsKey(position)) return genetateRandomEmptyPosition();
+        positions = new Dictionary<Vector2, PositionalObject>();
+        Positionals = new List<PositionalObject>();
+    }
+
+    private Vector2? genetateRandomEmptyPosition(int depth = 0)
+    {
+        if (depth > 10) return null;
+        var position = new Vector2(Random.Range(0, size), Random.Range(0, size));
+        if (positions.ContainsKey(position)) return genetateRandomEmptyPosition(depth += 1);
 
         return position;
     }
 
+    [CanBeNull]
     public PositionalObject AddPositional()
     {
         Debug.Log("Adding Positional");
-        var obj = Object.Instantiate(template, parent.transform).gameObject;
-        obj.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        var positional = parent.AddComponent<PositionalObject>();
-        positional.Create(obj);
         var pos = genetateRandomEmptyPosition();
-        var vec3pos = new Vector3(pos.x, pos.y, 0);
-        positional.MoveTo(vec3pos);
+        if (pos.HasValue == false) return null;
+        var vec3pos = new Vector3(pos.Value.x, pos.Value.y, 0);
+        var obj = Instantiate(template, vec3pos, Quaternion.identity, parent.transform);
+        obj.name = "Positional # " + Positionals.Count;
+        obj.AddComponent<PositionalObject>();
+
+        var positional = obj.GetComponent<PositionalObject>();
+        positional.Create(pos.Value.x, pos.Value.y, this);
         Positionals.Add(positional);
-        positions.Add(pos, positional);
-        return positions[pos];
+        positions.Add(pos.Value, positional);
+        return positions[pos.Value];
+    }
+
+    public bool MovePiece(PositionalObject obj, Vector2 req_pos)
+    {
+        if (positions.ContainsKey(req_pos)) return false;
+        if (req_pos.x < 0 || req_pos.y < 0) return false;
+        if (req_pos.x > size || req_pos.y > size) return false;
+        positions.Remove(new Vector2(obj.pos.x, obj.pos.y));
+        positions.Add(req_pos, obj);
+        obj.SetPosition(new Vector3(req_pos.x, req_pos.y));
+        return true;
+    }
+
+    public void RemovePiece(PositionalObject positional)
+    {
+        positions.Remove(positional.pos);
+        Positionals.RemoveAt(Positionals.FindIndex(p => p.gameObject.name == positional.gameObject.name));
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Managers
@@ -13,15 +14,24 @@ namespace Managers
                 () =>
                 {
                     Debug.Log("G was pressed!");
-                    SimulationManager.WorldManager.PopulationManager.AdvanceGeneration(SimulationManager.WorldManager
-                        .DesiredPopulation);
+                    SimulationManager.WorldManager.PopulationManager.AdvanceGeneration();
                 });
 
             InputManager.RegisterAction(KeyCode.S,
                 () =>
                 {
-                    SimulationManager.WorldManager.PopulationManager.Step();
                     Debug.Log("S was pressed!");
+
+                    IEnumerator Advance()
+                    {
+                        for (var i = 0; i < 100; i++)
+                        {
+                            yield return new WaitForSeconds(0.05f);
+                            SimulationManager.WorldManager.PopulationManager.Step();
+                        }
+                    }
+
+                    StartCoroutine(Advance());
                 });
         }
 

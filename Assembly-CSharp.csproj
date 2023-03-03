@@ -41,6 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets/Scripts/Gene.cs" />
      <Compile Include="Assets/Scripts/Brain.cs" />
      <Compile Include="Assets/Scripts/Managers/PopulationManager.cs" />
      <Compile Include="Assets/Scripts/NeuronGroup.cs" />
@@ -50,7 +51,6 @@
      <Compile Include="Assets/Scripts/Managers/PositionManager.cs" />
      <Compile Include="Assets/Scripts/DNA.cs" />
      <Compile Include="Assets/Scripts/Managers/SimulationManager.cs" />
-     <Compile Include="Assets/Scripts/Genome.cs" />
      <Compile Include="Assets/Scripts/PositionalObject.cs" />
      <Compile Include="Assets/Scripts/Try.cs" />
      <Compile Include="Assets/Scripts/Neuron.cs" />

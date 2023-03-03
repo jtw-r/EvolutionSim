@@ -5,10 +5,10 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class DNA
 {
-    public List<Genome> genomes;
+    public List<Gene> genomes;
     public string string_representation;
 
-    public DNA(List<Genome> genomes = null)
+    public DNA(List<Gene> genomes = null)
     {
         this.genomes = genomes;
         string_representation = "";
@@ -16,16 +16,16 @@ public class DNA
             foreach (var genome in genomes)
                 string_representation += genome.GenomeString + " ";
         else
-            genomes = new List<Genome>();
+            genomes = new List<Gene>();
     }
 
-    public void AddGenome(Genome genome)
+    public void AddGenome(Gene gene)
     {
-        genomes.Add(genome);
+        genomes.Add(gene);
         if (genomes.Count == 1)
-            string_representation = genome.GenomeString;
+            string_representation = gene.GenomeString;
         else
-            string_representation += " " + genome.GenomeString;
+            string_representation += " " + gene.GenomeString;
     }
 
     /**
@@ -33,7 +33,7 @@ public class DNA
      */
     public void FullyRandomize(int genome_count, NeuronGroup brain_template)
     {
-        genomes = new List<Genome>();
+        genomes = new List<Gene>();
         for (var g = 0; g < genome_count; g++)
         {
             Neuron input = null;
@@ -78,7 +78,7 @@ public class DNA
                     break;
             }
 
-            if (input != null && output != null) AddGenome(new Genome(input, output, Random.Range(0, 4096 - 1)));
+            if (input != null && output != null) AddGenome(new Gene(input, output, Random.Range(0, 4096 - 1)));
         }
     }
 

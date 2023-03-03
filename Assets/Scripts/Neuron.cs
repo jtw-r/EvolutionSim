@@ -20,11 +20,11 @@ public enum NeuronFlowType
 [Serializable]
 public class Neuron
 {
-    public int ID;
-    public string Name;
     public NeuronFlowType Flow;
+    public int ID;
     public int MaxInputs;
     public int MaxOutputs;
+    public string Name;
     public int TotalInputs;
     public int TotalOutputs;
     public double value;
@@ -85,7 +85,7 @@ public class OutputNeuron : Neuron
         MaxOutputs = 0;
     }
 
-    public void Step(List<Genome> outputGenomes, Creature creature)
+    public void Step(List<Gene> outputGenomes, Creature creature)
     {
         if (outputGenomes.Count == 0) return;
         value = Math.Tanh(outputGenomes.Average(v => v.InputNeuron.value * v.Bias));
@@ -108,7 +108,7 @@ public class ThroughNeuron : Neuron
         MaxOutputs = maxOutputs;
     }
 
-    public void Step(List<Genome> throughGenomes)
+    public void Step(List<Gene> throughGenomes)
     {
         if (throughGenomes.Count == 0) return;
         value = Math.Tanh(throughGenomes.Average(v => v.InputNeuron.value * v.Bias));
