@@ -69,8 +69,12 @@ public class PopulationManager {
     return Creatures.FindAll(query);
   }
 
-  public void Remove(Creature creature) {
-    creature.Destroy();
+  public static void Remove(Creature _creature) {
+    _creature.Destroy();
+  }
+
+  public static void RemoveMany(IEnumerable<Creature> _creatures) {
+    foreach (var creature in _creatures) creature.Destroy();
   }
 
   public void Step() {
@@ -110,13 +114,12 @@ public class PopulationManager {
       }
 
 
-    foreach (var creature in Creatures) Remove(creature);
-
-    Creatures = new List<Creature>();
+    WipePopulation();
+    
     var ready = new_creatures.FindAll(creature => creature.positional != null);
     if (ready.Count > DesiredPopulationCount) {
       var to_remove = ready.GetRange(DesiredPopulationCount, ready.Count - DesiredPopulationCount);
-      foreach (var creature in to_remove) creature.Destroy();
+      RemoveMany(to_remove);
       Creatures = ready.GetRange(0, DesiredPopulationCount);
     }
     else {
@@ -130,5 +133,9 @@ public class PopulationManager {
     Generation++;
   }
 
-  public void WipePopulation() { }
+  public void WipePopulation() {
+    Debug.Log($"Wiping population of size: {Creatures.Count}");
+    RemoveMany(Creatures);
+    Creatures = new List<Creature>();
+  }
 }
