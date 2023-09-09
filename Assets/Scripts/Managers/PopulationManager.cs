@@ -12,8 +12,8 @@ public class PopulationManager
     public List<Creature> Creatures = new();
     public int DesiredPopulationCount = 50;
     public int Generation = 1;
-    private PositionManager PositionManager;
     public int Year;
+    private PositionManager PositionManager;
 
     public PopulationManager(PositionManager positionManager)
     {
@@ -36,8 +36,6 @@ public class PopulationManager
                 {
                     new("Output #01", 5, (creature, value) =>
                     {
-                        Debug.Log("Output #01");
-                        Debug.Log(value);
                         if (value >= 0.5)
                         {
                             var pos = new Vector2(-1, 0);
@@ -48,22 +46,16 @@ public class PopulationManager
                     }),
                     new("Output #02", 5, (creature, value) =>
                     {
-                        Debug.Log("Output #02");
-                        Debug.Log(value);
                         if (value >= 0.5) creature.Move(new Vector2(1, 0));
                         //Do some action depending on the values
                     }),
                     new("Output #03", 5, (creature, value) =>
                     {
-                        Debug.Log("Output #03");
-                        Debug.Log(value);
                         if (value >= 0.5) creature.Move(new Vector2(0, -1));
                         //Do some action depending on the values
                     }),
                     new("Output #04", 5, (creature, value) =>
                     {
-                        Debug.Log("Output #04");
-                        Debug.Log(value);
                         if (value >= 0.5) creature.Move(new Vector2(0, 1));
                         //Do some action depending on the values
                     })
@@ -92,10 +84,7 @@ public class PopulationManager
 
     public void Remove(Creature creature)
     {
-        Debug.Log(Creatures.Count);
         creature.Destroy();
-
-        Debug.Log(Creatures.Count);
     }
 
     public void Step()

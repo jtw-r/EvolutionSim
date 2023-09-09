@@ -10,21 +10,21 @@ public class PositionManager : MonoBehaviour
     public GameObject camera;
     public GameObject parent;
     public List<PositionalObject> Positionals = new();
-    private Dictionary<Vector2, PositionalObject> positions = new();
     public int size;
     public GameObject template;
-
-    public void Start()
-    {
-        camera.transform.position = new Vector3(size / 2f, size / 2f, -10);
-        camera.GetComponent<Camera>().orthographicSize = size / 2f + 2f;
-    }
+    private Dictionary<Vector2, PositionalObject> positions = new();
 
 
     public void Reset()
     {
         positions = new Dictionary<Vector2, PositionalObject>();
         Positionals = new List<PositionalObject>();
+    }
+
+    public void Start()
+    {
+        camera.transform.position = new Vector3(size / 2f, size / 2f, -10);
+        camera.GetComponent<Camera>().orthographicSize = size / 2f + 2f;
     }
 
     private Vector2? genetateRandomEmptyPosition(int depth = 0)
@@ -39,7 +39,6 @@ public class PositionManager : MonoBehaviour
     [CanBeNull]
     public PositionalObject AddPositional()
     {
-        Debug.Log("Adding Positional");
         var pos = genetateRandomEmptyPosition();
         if (pos.HasValue == false) return null;
         var vec3pos = new Vector3(pos.Value.x, pos.Value.y, 0);

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public enum NeuronInputCategory
 {
@@ -41,7 +40,6 @@ public class Neuron
 
     public void AddConnection()
     {
-        Debug.Log("Nope");
     }
 }
 

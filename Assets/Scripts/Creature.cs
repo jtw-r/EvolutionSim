@@ -66,14 +66,9 @@ public class Creature
             }
 
             if (Random.Range(0, 20) == 0)
-            {
-                Debug.Log("Mutating gene");
                 new_genes.Add(gene.Mutate(creatureA.brain.neurons));
-            }
             else
-            {
                 new_genes.Add(gene);
-            }
         }
 
         var new_dna = new DNA(new_genes);
