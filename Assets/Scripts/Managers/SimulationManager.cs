@@ -1,17 +1,11 @@
 using UnityEngine;
 
-namespace Managers
-{
-    public class SimulationManager : MonoBehaviour
-    {
-        public WorldManager WorldManager;
+namespace Managers {
+  public class SimulationManager : MonoBehaviour {
+    public WorldManager WorldManager;
 
-        public void Start()
-        {
-        }
+    public void Start() { }
 
-        public void Update()
-        {
-        }
-    }
+    public void Update() { }
+  }
 }
